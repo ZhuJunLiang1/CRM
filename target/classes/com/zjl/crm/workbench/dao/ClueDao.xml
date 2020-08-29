@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zjl.crm.workbench.dao.ClueDao">
+    <insert id="save">
+        insert into tbl_clue(
+        id,
+        fullname,
+        appellation,
+        owner,
+        company,
+        job,
+        email,
+        phone,
+        website,
+        mphone,
+        state,
+        source,
+        createBy,
+        createTime,
+        editBy,
+        editTime,
+        description,
+        contactSummary,
+        nextContactTime,
+        address)
+        values (
+        #{id},
+        #{fullname},
+        #{appellation},
+        #{owner},
+        #{company},
+        #{job},
+        #{email},
+        #{phone},
+        #{website},
+        #{mphone},
+        #{state},
+        #{source},
+        #{createBy},
+        #{createTime},
+        #{editBy},
+        #{editTime},
+        #{description},
+        #{contactSummary},
+        #{nextContactTime},
+        #{address}
+        )
+
+    </insert>
+	<select id="getTotalByCondition" resultType="int">
+        select count(*)
+        from tbl_clue a
+        join tbl_user u
+        on a.owner = u.id
+        <where>
+            <if test="clue.fullname != null and clue.fullname != ''">
+                a.fullname like '%' #{clue.fullname} '%'
+            </if>
+            <if test="clue.company != null and clue.company != ''">
+                and a.company like '%' #{clue.company} '%'
+            </if>
+            <if test="clue.phone != null and clue.phone != ''">
+                and a.phone like '%' #{clue.phone} '%'
+            </if>
+            <if test="clue.source != null and clue.source != ''">
+                and a.source like '%' #{clue.source} '%'
+            </if>
+            <if test="clue.owner != null and clue.owner != ''">
+                and u.name like '%' #{clue.owner} '%'
+            </if>
+            <if test="clue.mphone != null and clue.mphone != ''">
+                and a.mphone like '%' #{clue.mphone} '%'
+            </if>
+            <if test="clue.state != null and clue.state != ''">
+                and a.state like '%' #{clue.state} '%'
+            </if>
+        </where>
+    </select>
+    <select id="getClueListByCondition" resultType="com.zjl.crm.workbench.domain.Clue">
+    select  a.id,
+            a.fullname,
+            a.appellation,
+            u.name as owner,
+            a.company,
+            a.job,
+            a.email,
+            a.phone,
+            a.website,
+            a.mphone,
+            a.state,
+            a.source,
+            a.createBy,
+            a.createTime,
+            a.editBy,
+            a.editTime,
+            a.description,
+            a.contactSummary,
+            a.nextContactTime,
+            a.address
+            from tbl_clue a
+            join tbl_user u
+            on a.owner = u.id
+        <where>
+            <if test="clue.fullname != null and clue.fullname != ''">
+                a.fullname like '%' #{clue.fullname} '%'
+            </if>
+            <if test="clue.company != null and clue.company != ''">
+                and a.company like '%' #{clue.company} '%'
+            </if>
+            <if test="clue.phone != null and clue.phone != ''">
+                and a.phone like '%' #{clue.phone} '%'
+            </if>
+            <if test="clue.source != null and clue.source != ''">
+                and a.source like '%' #{clue.source} '%'
+            </if>
+            <if test="clue.owner != null and clue.source != ''">
+                and u.name like '%' #{clue.owner} '%'
+            </if>
+            <if test="clue.mphone != null and clue.mphone != ''">
+                and a.mphone like '%' #{clue.mphone} '%'
+            </if>
+            <if test="clue.state != null and clue.state != ''">
+                and a.state like '%' #{clue.state} '%'
+            </if>
+        </where>
+        order by a.createTime desc
+        limit #{skipCount},#{pageSize}
+    </select>
+    <delete id="delete">
+        delete from tbl_clue
+        where id in
+        <foreach collection="array" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+    <select id="getById" resultType="com.zjl.crm.workbench.domain.Clue">
+        select * from tbl_clue where id = #{id}
+    </select>
+    <update id="update">
+        update tbl_clue set
+        fullname=#{fullname},
+        appellation=#{appellation},
+        owner=#{owner},
+        company=#{company},
+        job=#{job},
+        email=#{email},
+        phone=#{phone},
+        website=#{website},
+        mphone=#{mphone},
+        state=#{state},
+        source=#{source},
+        editBy=#{editBy},
+        editTime=#{editTime},
+        description=#{description},
+        contactSummary=#{contactSummary},
+        nextContactTime=#{nextContactTime},
+        address=#{address}
+        where id=#{id}
+    </update>
+    <select id="detail" resultType="com.zjl.crm.workbench.domain.Clue">
+        select
+            a.id,
+            a.fullname,
+            a.appellation,
+            u.name as owner,
+            a.company,
+            a.job,
+            a.email,
+            a.phone,
+            a.website,
+            a.mphone,
+            a.state,
+            a.source,
+            a.createBy,
+            a.createTime,
+            a.editBy,
+            a.editTime,
+            a.description,
+            a.contactSummary,
+            a.nextContactTime,
+            a.address
+            from tbl_clue a
+            join tbl_user u
+            on a.owner = u.id
+            where a.id=#{id}
+    </select>
+
+    <delete id="deleteById">
+        delete from tbl_clue
+        where id=#{id}
+    </delete>
+    <select id="getTotal" resultType="Int">
+        select count(*) from tbl_clue
+    </select>
+    <select id="getCharts" resultType="Map">
+        select DISTINCT source as name,count(*) as value
+        from tbl_clue GROUP BY source ORDER BY source
+    </select>
+    <select id="getClueSourceList" resultType="String">
+        select DISTINCT source from tbl_clue ORDER BY source
+    </select>
+    <select id="getCountList" resultType="Int">
+        select count(*)
+        from tbl_clue GROUP BY source ORDER BY source
+    </select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

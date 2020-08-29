@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zjl.crm.workbench.dao.ContactsRemarkDao">
+    <insert id="save">
+        insert into tbl_contacts_remark(
+        id,
+        noteContent,
+        createTime,
+        createBy,
+        editFlag,
+        contactsId
+        )values (
+        #{id},
+        #{noteContent},
+        #{createTime},
+        #{createBy},
+        #{editFlag},
+        #{contactsId}
+        )
+    </insert>
+  	<select id="getCountByContactsIds" resultType="int">
+        select count(*) from tbl_contacts_remark
+        where contactsId in
+        <foreach collection="array" open="(" close=")" item="id" separator=",">
+            #{id}
+        </foreach>
+    </select>
+    <delete id="deleteByContactsIds">
+        delete from tbl_contacts_remark
+        where contactsId in
+        <foreach collection="array" open="(" close=")" item="id" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+    <select id="getRemarkListByContactsId" resultType="ContactsRemark">
+                select * from tbl_contacts_remark where contactsId = #{contactsId} order by createTime
+        </select>
+    <delete id="deleteRemarkById">
+                delete from tbl_contacts_remark where id=#{id}
+        </delete>
+    <update id="updateRemark">
+        update tbl_contacts_remark set
+        noteContent=#{noteContent},
+        editBy=#{editBy},
+        editTime=#{editTime},
+        editFlag=#{editFlag}
+        where id=#{id}
+    </update>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
