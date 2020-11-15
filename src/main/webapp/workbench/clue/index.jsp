@@ -87,6 +87,7 @@ request.getContextPath() + "/";
 						$("#clueAddForm")[0].reset();
 						//关闭模态窗口
 						$("#createClueModal").modal("hide");
+						alert("添加线索成功");
 					}else {
 						alert("添加线索失败");
 					}
@@ -209,8 +210,9 @@ request.getContextPath() + "/";
 								,$("#cluePage").bs_pagination('getOption', 'rowsPerPage'));
 						//关闭添加操作模态窗口
 						$("#editClueModal").modal("hide");
+						alert("修改线索成功")
 					}else {
-						alert("修改市场活动失败")
+						alert("修改线索失败")
 					}
 				}
 			})
@@ -243,8 +245,9 @@ request.getContextPath() + "/";
 							if(data.success){
 								//回到第一页，维持 每页展现记录数
 								pageList(1,$("#cluePage").bs_pagination('getOption', 'rowsPerPage'));
+								alert("删除该条线索及相关信息成功");
 							}else {
-								alert("删除市场活动失败");
+								alert("删除线索失败");
 							}
 						}
 					})
@@ -289,7 +292,7 @@ request.getContextPath() + "/";
 				$.each(data.dataList, function (i, n) {
 					html += '<tr>';
 					html += '<td><input type="checkbox" name="check" value="' + n.id + '" /></td>';
-					html += '<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href=\'workbench/clue/detail.do?id=' + n.id + '\';">' + n.fullname + '</a></td>';
+					html += '<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href=\'workbench/clue/detail.do?id='+n.id+'\';">' + n.fullname + '</a></td>';
 					html += '<td>' + n.company + '</td>';
 					html += '<td>' + n.phone + '</td>';
 					html += '<td>' + n.mphone + '</td>';

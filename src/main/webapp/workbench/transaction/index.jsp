@@ -72,6 +72,7 @@ request.getContextPath() + "/";
 							if(data.success){
 								//回到第一页，维持 每页展现记录数
 								pageList(1,$("#tranPage").bs_pagination('getOption', 'rowsPerPage'));
+								alert("删除交易成功");
 							}else {
 								alert("删除交易失败");
 							}

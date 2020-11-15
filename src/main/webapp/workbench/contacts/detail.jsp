@@ -279,7 +279,7 @@ request.getContextPath() + "/";
 						"activityName": $.trim($("#searchActivity").val()),
 						"contactsId": "${contacts.id}"
 					},
-					type:"post",
+					type:"get",
 					dataType:"json",
 					success:function (data) {
 						var html = "";
@@ -330,6 +330,7 @@ request.getContextPath() + "/";
 							$("#activitySearchBody").html("");
 							//关闭窗口
 							$("#bundActivityModal").modal("hide");
+							alert("关联市场活动成功！");
 						}else {
 							alert("关联市场活动失败！");
 						}
@@ -398,6 +399,7 @@ request.getContextPath() + "/";
 					//记录使用的是before方法，每一次删除后会保留所有数据
 					// showRemarkList();
 					$("#"+id).remove();
+					alert("删除成功");
 				}else {
 					alert("删除失败");
 				}
@@ -467,6 +469,7 @@ request.getContextPath() + "/";
                     if(data.success){
                         showActivityList();
                         $("#unbundActivityModal").modal("hide");
+						alert("删除该条活动成功！")
                     }else {
                         $("#unbundActivityModal").modal("hide");
                         alert("删除该条活动失败！")

@@ -14,4 +14,16 @@ public interface UserDao {
     User getUserById(String userId);
 
     int changePwd(Map<String,String> map);
+
+    int getTotalByCondition(Map<String, Object> map);
+
+    List<User> getUserListByCondition(Map<String, Object> map);
+
+    int delete(String[] ids);
+
+    int save(User user);
+
+    int update(User user);
+
+    User getUserByLoginAct(String loginAct);
 }

@@ -6,5 +6,28 @@
     <select id="getTypeList" resultType="com.zjl.crm.settings.domain.DicType">
         select * from tbl_dic_type
     </select>
-
+    <delete id="delete">
+        delete from tbl_dic_type
+        where code in
+        <foreach collection="array" item="code" open="(" close=")" separator=",">
+            #{code}
+        </foreach>
+    </delete>
+    <select id="getDicTypeByCode" resultType="DicType">
+        select * from tbl_dic_type where code=#{code}
+    </select>
+    <insert id="save" >
+        insert into tbl_dic_type
+        values (
+        #{code},
+        #{name},
+        #{description}
+        )
+    </insert>
+    <update id="update">
+        update tbl_dic_type
+        set name=#{name},
+        description=#{description}
+        where code=#{code}
+    </update>
 </mapper>

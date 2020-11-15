@@ -24,10 +24,7 @@ public class TranServiceImpl implements TranService {
     private TranRemarkDao tranRemarkDao;
     @Resource
     private CustomerDao customerDao;
-    @Resource
-    private ActivityDao activityDao;
-    @Resource
-    private ContactsDao contactsDao;
+
     @Override
     public PageinationVO<Tran> pageList(Map<String, Object> map) {
         int total = tranDao.getTotalByCondition(map);
@@ -167,7 +164,7 @@ public class TranServiceImpl implements TranService {
         }
         return flag;
     }
-
+    @Transactional
     @Override
     public boolean update(Tran tran, String customerName) {
         boolean flag = true;

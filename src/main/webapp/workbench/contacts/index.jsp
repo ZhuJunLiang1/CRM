@@ -586,7 +586,8 @@ request.getContextPath() + "/";
 			</div>
 		</div>
 	</div>
-	
+
+	<!-- 联系人列表 -->
 	<div>
 		<div style="position: relative; left: 10px; top: -10px;">
 			<div class="page-header">
@@ -622,9 +623,9 @@ request.getContextPath() + "/";
 				      <input class="form-control" type="text" id="search-customerId">
 				    </div>
 				  </div>
-				  
+
 				  <br>
-				  
+
 				  <div class="form-group">
 				    <div class="input-group">
 				      <div class="input-group-addon">来源</div>
@@ -648,15 +649,15 @@ request.getContextPath() + "/";
 				  
 				</form>
 			</div>
+
 			<div class="btn-toolbar" role="toolbar" style="background-color: #F7F7F7; height: 50px; position: relative;top: 10px;">
 				<div class="btn-group" style="position: relative; top: 18%;">
 				  <button type="button" class="btn btn-primary" id="addBtn"><span class="glyphicon glyphicon-plus"></span> 创建</button>
 				  <button type="button" class="btn btn-default" id="editBtn"><span class="glyphicon glyphicon-pencil"></span> 修改</button>
 				  <button type="button" class="btn btn-danger" id="deleteBtn" ><span class="glyphicon glyphicon-minus"></span> 删除</button>
 				</div>
-				
-				
 			</div>
+
 			<div style="position: relative;top: 20px;">
 				<table class="table table-hover">
 					<thead>
@@ -670,22 +671,6 @@ request.getContextPath() + "/";
 						</tr>
 					</thead>
 					<tbody id="contactsBody">
-<%--						<tr>--%>
-<%--							<td><input type="checkbox" /></td>--%>
-<%--							<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='workbench/contacts/detail.jsp';">李四</a></td>--%>
-<%--							<td>动力节点</td>--%>
-<%--							<td>zhangsan</td>--%>
-<%--							<td>广告</td>--%>
-<%--							<td>2000-10-10</td>--%>
-<%--						</tr>--%>
-<%--                        <tr class="active">--%>
-<%--                            <td><input type="checkbox" /></td>--%>
-<%--                            <td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='workbench/contacts/detail.jsp';">李四</a></td>--%>
-<%--                            <td>动力节点</td>--%>
-<%--                            <td>zhangsan</td>--%>
-<%--                            <td>广告</td>--%>
-<%--                            <td>2000-10-10</td>--%>
-<%--                        </tr>--%>
 					</tbody>
 				</table>
 			</div>

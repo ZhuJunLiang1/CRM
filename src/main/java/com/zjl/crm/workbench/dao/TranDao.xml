@@ -50,19 +50,19 @@
             where id=#{id}
     </delete>
     <select id="getCountByContactsIds" resultType="int">
-                select count(*) from tbl_tran
-                where contactsId in
-                <foreach collection="array" open="(" close=")" item="id" separator=",">
-                        #{id}
-                </foreach>
-        </select>
-        <delete id="deleteByContactsIds">
-                delete from tbl_tran
-                where contactsId in
-                <foreach collection="array" open="(" close=")" item="id" separator=",">
-                        #{id}
-                </foreach>
-        </delete>
+            select count(*) from tbl_tran
+            where contactsId in
+            <foreach collection="array" open="(" close=")" item="id" separator=",">
+                    #{id}
+            </foreach>
+    </select>
+    <delete id="deleteByContactsIds">
+            delete from tbl_tran
+            where contactsId in
+            <foreach collection="array" open="(" close=")" item="id" separator=",">
+                    #{id}
+            </foreach>
+    </delete>
     <select id="getTranListByContactsId" resultType="Tran">
         select * from tbl_tran
         where contactsId=#{contactsId}

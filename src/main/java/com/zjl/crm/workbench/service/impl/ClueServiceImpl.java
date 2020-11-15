@@ -34,7 +34,6 @@ public class ClueServiceImpl implements ClueService {
     private ContactsRemarkDao contactsRemarkDao;
     @Resource
     private ContactsActivityRelationDao contactsActivityRelationDao;
-
     @Resource
     private TranDao tranDao;
     @Resource
@@ -83,7 +82,7 @@ public class ClueServiceImpl implements ClueService {
     }
 
     @Override
-    public Map<String, Object> getUserListAndActivity(String id) {
+    public Map<String, Object> getUserListAndClue(String id) {
         //取uList
         List<User> uList = userDao.getUserList();
         //取activity

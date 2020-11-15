@@ -2,7 +2,13 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       https://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <!-- 声明数据源 DataSource  连接数据库 -->
     <context:property-placeholder location="classpath:config/jdbc.properties"/>
@@ -12,8 +18,25 @@
         <property name="url" value="${jdbc.url}"/>
         <property name="username" value="${jdbc.username}"/>
         <property name="password" value="${jdbc.password}"/>
-        <!-- 最大连接数 -->
+            <!-- 最大连接数 -->
         <property name="maxActive" value="${jdbc.max}"/>
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="${jdbc.timeBetweenEvictionRunsMillis}"/>
+        <property name="initialSize" value="${jdbc.initialSize}"/>
+        <property name="maxWait" value="${jdbc.maxWait}"/>
+        <property name="filters" value="${jdbc.filters}"/>
+        <property name="minEvictableIdleTimeMillis" value="${jdbc.minEvictableIdleTimeMillis}"/>
+        <property name="validationQuery" value="${jdbc.validationQuery}"/>
+        <property name="testWhileIdle" value="${jdbc.testWhileIdle}"/>
+        <property name="testOnBorrow" value="${jdbc.testOnBorrow}"/>
+        <property name="testOnReturn" value="${jdbc.testOnReturn}"/>
+        <property name="maxOpenPreparedStatements" value="${jdbc.maxOpenPreparedStatements}"/>
+        <!-- 打开removeAbandoned功能 -->
+        <property name="removeAbandoned" value="${jdbc.removeAbandoned}"/>
+        <!-- 1800秒，也就是30分钟 -->
+        <property name="removeAbandonedTimeoutMillis" value="${jdbc.removeAbandonedTimeout}"/>
+        <!-- 关闭abanded连接时输出错误日志 -->
+        <property name="logAbandoned" value="${jdbc.logAbandoned}"/>
     </bean>
     <!-- 声明 mybatis中提供的sqlSessionFactoryBean类 -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
@@ -42,6 +65,31 @@
         <!-- 连接的数据库-->
         <property name="dataSource" ref="myDataSource"/>
     </bean>
-    <!--开启事务注解驱动 -->
-    <tx:annotation-driven transaction-manager="transactionManager"/>
+<!--    &lt;!&ndash;开启事务注解驱动 &ndash;&gt;-->
+<!--    <tx:annotation-driven transaction-manager="transactionManager"/>-->
+    <!--使用aspectJ 管理事务（隔离级别（默认有），传播行为（配置），超时时间） -->
+    <tx:advice id="myAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="delete*"/>
+            <tx:method name="save*"/>
+            <tx:method name="add*"/>
+            <tx:method name="change*"/>
+            <tx:method name="update*"/>
+            <tx:method name="*bund*"/>
+            <tx:method name="convert"/>
+            <tx:method name="login"/>
+            <tx:method name="register"/>
+            <tx:method name="pageList" propagation="SUPPORTS" read-only="true"/>
+            <!-- 传播行为  支持事务，没有也可以    只读 开启 -->
+            <tx:method name="get*" propagation="SUPPORTS" read-only="true"/>
+        </tx:attributes>
+    </tx:advice>
+    <!--配置AOP 指定哪些类要事务 -->
+    <aop:config>
+        <aop:pointcut id="servicePt" expression="execution(* *..service.impl.*.*(..))"/>
+        <!--配置增强器：关联advice和pointcut -->
+        <!-- 将环绕配置和 切入点关联起来 -->
+        <aop:advisor advice-ref="myAdvice" pointcut-ref="servicePt"/>
+
+    </aop:config>
 </beans>

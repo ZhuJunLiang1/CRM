@@ -155,8 +155,9 @@ request.getContextPath() + "/";
 					if(data.success){
 						$("#editClueModal").modal("hide");
 						location.reload();
+						alert("修改线索成功");
 					}else {
-						alert("修改市场活动失败");
+						alert("修改线索失败");
 					}
 				}
 			})
@@ -194,6 +195,7 @@ request.getContextPath() + "/";
 						html += '</div>';
 						$("#remarkDiv").before(html);
 						$("#remark").val("");
+						alert("添加备注成功！");
 					}else {
 						alert("添加备注失败！");
 					}
@@ -221,6 +223,7 @@ request.getContextPath() + "/";
 						$("#e"+id).html(data.clueRemark.noteContent);
 						$("#s"+id).html(data.clueRemark.editTime + "由"+ data.clueRemark.editBy+"修改");
 						$("#editRemarkModal").modal("hide");
+						alert("修改备注成功！");
 					}else {
 						alert("修改备注失败！");
 					}
@@ -250,7 +253,7 @@ request.getContextPath() + "/";
 						"activityName": $.trim($("#searchActivity").val()),
 						"clueId": "${clue.id}"
 					},
-					type:"post",
+					type:"get",
 					dataType:"json",
 					success:function (data) {
 						var html = "";
@@ -302,6 +305,7 @@ request.getContextPath() + "/";
 							$("#activitySearchBody").html();
 							//关闭窗口
 							$("#bundModal").modal("hide");
+							alert("关联市场活动成功！");
 						}else {
 							alert("关联市场活动失败！");
 						}
@@ -350,6 +354,7 @@ request.getContextPath() + "/";
                 success:function (data) {
                     if(data.success){
                         showActivityList();
+						alert("解除关联成功！")
                     }else {
                         alert("解除关联失败！")
                     }
@@ -420,8 +425,9 @@ request.getContextPath() + "/";
 					//记录使用的是before方法，每一次删除后会保留所有数据
 					// showRemarkList();
 					$("#"+id).remove();
+					alert("删除备注成功");
 				}else {
-					alert("删除失败");
+					alert("删除备注失败");
 				}
 			}
 		})
@@ -604,7 +610,7 @@ request.getContextPath() + "/";
 
                         <div style="position: relative;top: 15px;">
                             <div class="form-group">
-                                <label for="edit-contactSummary" class="col-sm-2 control-label">练习纪要</label>
+                                <label for="edit-contactSummary" class="col-sm-2 control-label">联系纪要</label>
                                 <div class="col-sm-10" style="width: 81%;">
                                     <textarea class="form-control" rows="3" id="edit-contactSummary"></textarea>
                                 </div>
@@ -660,59 +666,59 @@ request.getContextPath() + "/";
 		<div style="position: relative; left: 40px; height: 30px;">
 			<input type="hidden" id="clue-id" value="${clue.id}">
 			<div style="width: 300px; color: gray;">名称</div>
-			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>${clue.fullname}</b></div>
+			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>${clue.fullname}&nbsp;&nbsp;</b></div>
 			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">所有者</div>
-			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>${clue.owner}</b></div>
+			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>${clue.owner}&nbsp;&nbsp;</b></div>
 			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>
 			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
 		</div>
 		<div style="position: relative; left: 40px; height: 30px; top: 10px;">
 			<div style="width: 300px; color: gray;">公司</div>
-			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>${clue.company}</b></div>
+			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>${clue.company}&nbsp;&nbsp;</b></div>
 			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">职位</div>
-			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>${clue.job}</b></div>
+			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>${clue.job}&nbsp;&nbsp;</b></div>
 			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>
 			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
 		</div>
 		<div style="position: relative; left: 40px; height: 30px; top: 20px;">
 			<div style="width: 300px; color: gray;">邮箱</div>
-			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>${clue.email}</b></div>
+			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>${clue.email}&nbsp;&nbsp;</b></div>
 			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">公司座机</div>
-			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>${clue.phone}</b></div>
+			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>${clue.phone}&nbsp;&nbsp;</b></div>
 			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>
 			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
 		</div>
 		<div style="position: relative; left: 40px; height: 30px; top: 30px;">
 			<div style="width: 300px; color: gray;">公司网站</div>
-			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>${clue.website}</b></div>
+			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>${clue.website}&nbsp;&nbsp;</b></div>
 			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">手机</div>
-			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>${clue.mphone}</b></div>
+			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>${clue.mphone}&nbsp;&nbsp;</b></div>
 			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>
 			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
 		</div>
 		<div style="position: relative; left: 40px; height: 30px; top: 40px;">
 			<div style="width: 300px; color: gray;">线索状态</div>
-			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>${clue.state}</b></div>
+			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>${clue.state}&nbsp;&nbsp;</b></div>
 			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">线索来源</div>
-			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>${clue.source}</b></div>
+			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>${clue.source}&nbsp;&nbsp;</b></div>
 			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>
 			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
 		</div>
 		<div style="position: relative; left: 40px; height: 30px; top: 50px;">
 			<div style="width: 300px; color: gray;">创建者</div>
-			<div style="width: 500px;position: relative; left: 200px; top: -20px;"><b>${clue.createBy}&nbsp;&nbsp;</b><small style="font-size: 10px; color: gray;">${clue.createTime}</small></div>
+			<div style="width: 500px;position: relative; left: 200px; top: -20px;"><b>${clue.createBy}&nbsp;&nbsp;</b><small style="font-size: 10px; color: gray;">${clue.createTime}&nbsp;&nbsp;</small></div>
 			<div style="height: 1px; width: 550px; background: #D5D5D5; position: relative; top: -20px;"></div>
 		</div>
 		<div style="position: relative; left: 40px; height: 30px; top: 60px;">
 			<div style="width: 300px; color: gray;">修改者</div>
-			<div style="width: 500px;position: relative; left: 200px; top: -20px;"><b>${clue.editBy}&nbsp;&nbsp;</b><small style="font-size: 10px; color: gray;">${clue.editTime}</small></div>
+			<div style="width: 500px;position: relative; left: 200px; top: -20px;"><b>${clue.editBy}&nbsp;&nbsp;</b><small style="font-size: 10px; color: gray;">${clue.editTime}&nbsp;&nbsp;</small></div>
 			<div style="height: 1px; width: 550px; background: #D5D5D5; position: relative; top: -20px;"></div>
 		</div>
 		<div style="position: relative; left: 40px; height: 30px; top: 70px;">
 			<div style="width: 300px; color: gray;">描述</div>
 			<div style="width: 630px;position: relative; left: 200px; top: -20px;">
 				<b>
-					${clue.description}
+					${clue.description}&nbsp;&nbsp;
 				</b>
 			</div>
 			<div style="height: 1px; width: 850px; background: #D5D5D5; position: relative; top: -20px;"></div>
@@ -721,21 +727,21 @@ request.getContextPath() + "/";
 			<div style="width: 300px; color: gray;">联系纪要</div>
 			<div style="width: 630px;position: relative; left: 200px; top: -20px;">
 				<b>
-					${clue.contactSummary}
+					${clue.contactSummary}&nbsp;&nbsp;
 				</b>
 			</div>
 			<div style="height: 1px; width: 850px; background: #D5D5D5; position: relative; top: -20px;"></div>
 		</div>
 		<div style="position: relative; left: 40px; height: 30px; top: 90px;">
 			<div style="width: 300px; color: gray;">下次联系时间</div>
-			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>${clue.nextContactTime}</b></div>
+			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>${clue.nextContactTime}&nbsp;&nbsp;</b></div>
 			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -20px; "></div>
 		</div>
         <div style="position: relative; left: 40px; height: 30px; top: 100px;">
             <div style="width: 300px; color: gray;">详细地址</div>
             <div style="width: 630px;position: relative; left: 200px; top: -20px;">
                 <b>
-					${clue.address}
+					${clue.address}&nbsp;&nbsp;
                 </b>
             </div>
             <div style="height: 1px; width: 850px; background: #D5D5D5; position: relative; top: -20px;"></div>
@@ -747,35 +753,6 @@ request.getContextPath() + "/";
 		<div class="page-header">
 			<h4>备注</h4>
 		</div>
-		
-<%--		<!-- 备注1 -->--%>
-<%--		<div class="remarkDiv" style="height: 60px;">--%>
-<%--			<img title="zhangsan" src="image/user-thumbnail.png" style="width: 30px; height:30px;">--%>
-<%--			<div style="position: relative; top: -40px; left: 40px;" >--%>
-<%--				<h5>哎呦！</h5>--%>
-<%--				<font color="gray">线索</font> <font color="gray">-</font> <b>李四先生-动力节点</b> <small style="color: gray;"> 2017-01-22 10:10:10 由zhangsan</small>--%>
-<%--				<div style="position: relative; left: 500px; top: -30px; height: 30px; width: 100px; display: none;">--%>
-<%--					<a class="myHref" href="javascript:void(0);"><span class="glyphicon glyphicon-edit" style="font-size: 20px; color: #E6E6E6;"></span></a>--%>
-<%--					&nbsp;&nbsp;&nbsp;&nbsp;--%>
-<%--					<a class="myHref" href="javascript:void(0);"><span class="glyphicon glyphicon-remove" style="font-size: 20px; color: #E6E6E6;"></span></a>--%>
-<%--				</div>--%>
-<%--			</div>--%>
-<%--		</div>--%>
-<%--		--%>
-<%--		<!-- 备注2 -->--%>
-<%--		<div class="remarkDiv" style="height: 60px;">--%>
-<%--			<img title="zhangsan" src="image/user-thumbnail.png" style="width: 30px; height:30px;">--%>
-<%--			<div style="position: relative; top: -40px; left: 40px;" >--%>
-<%--				<h5>呵呵！</h5>--%>
-<%--				<font color="gray">线索</font> <font color="gray">-</font> <b>李四先生-动力节点</b> <small style="color: gray;"> 2017-01-22 10:20:10 由zhangsan</small>--%>
-<%--				<div style="position: relative; left: 500px; top: -30px; height: 30px; width: 100px; display: none;">--%>
-<%--					<a class="myHref" href="javascript:void(0);"><span class="glyphicon glyphicon-edit" style="font-size: 20px; color: #E6E6E6;"></span></a>--%>
-<%--					&nbsp;&nbsp;&nbsp;&nbsp;--%>
-<%--					<a class="myHref" href="javascript:void(0);"><span class="glyphicon glyphicon-remove" style="font-size: 20px; color: #E6E6E6;"></span></a>--%>
-<%--				</div>--%>
-<%--			</div>--%>
-<%--		</div>--%>
-		
 		<div id="remarkDiv" style="background-color: #E6E6E6; width: 870px; height: 90px;">
 			<form role="form" style="position: relative;top: 10px; left: 10px;">
 				<textarea id="remark" class="form-control" style="width: 850px; resize : none;" rows="2"  placeholder="添加备注..."></textarea>
@@ -805,20 +782,6 @@ request.getContextPath() + "/";
 						</tr>
 					</thead>
 					<tbody id="activityBody">
-<%--						<tr>--%>
-<%--							<td>发传单</td>--%>
-<%--							<td>2020-10-10</td>--%>
-<%--							<td>2020-10-20</td>--%>
-<%--							<td>zhangsan</td>--%>
-<%--							<td><a href="javascript:void(0);"  style="text-decoration: none;"><span class="glyphicon glyphicon-remove"></span>解除关联</a></td>--%>
-<%--						</tr>--%>
-<%--						<tr>--%>
-<%--							<td>发传单</td>--%>
-<%--							<td>2020-10-10</td>--%>
-<%--							<td>2020-10-20</td>--%>
-<%--							<td>zhangsan</td>--%>
-<%--							<td><a href="javascript:void(0);"  style="text-decoration: none;"><span class="glyphicon glyphicon-remove"></span>解除关联</a></td>--%>
-<%--						</tr>--%>
 					</tbody>
 				</table>
 			</div>

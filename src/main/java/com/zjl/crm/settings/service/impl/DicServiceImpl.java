@@ -34,4 +34,89 @@ public class DicServiceImpl implements DicService {
         }
         return map;
     }
+
+    @Override
+    public List<DicValue> getValList() {
+        return dicValueDao.getValList();
+    }
+
+    @Override
+    public boolean delete(String[] ids) {
+        boolean flag = true;
+        int count = dicValueDao.delete(ids);
+        if(count != ids.length){
+            flag = false;
+        }
+        return flag;
+    }
+
+    @Override
+    public List<String> getTypeCode() {
+        return dicValueDao.getTypeCode();
+    }
+
+    @Override
+    public boolean saveDicValue(DicValue dicValue) {
+        boolean flag = true;
+        int count = dicValueDao.save(dicValue);
+        if(count != 1){
+            flag = false;
+        }
+        return flag;
+    }
+
+    @Override
+    public DicValue getDicValueById(String id) {
+        return dicValueDao.getDicValueById(id);
+    }
+
+    @Override
+    public boolean updateValue(DicValue dicValue) {
+        boolean flag = true;
+        int count = dicValueDao.update(dicValue);
+        if (count != 1){
+            flag = false;
+        }
+        return flag;
+    }
+
+    @Override
+    public List<DicType> getTypeList() {
+        return dicTypeDao.getTypeList();
+    }
+
+    @Override
+    public boolean deleteType(String[] codes) {
+        boolean flag = true;
+        int count = dicTypeDao.delete(codes);
+        if (count != codes.length){
+            flag = false;
+        }
+        return flag;
+    }
+
+    @Override
+    public DicType getDicTypeByCode(String code) {
+        return dicTypeDao.getDicTypeByCode(code);
+    }
+
+    @Override
+    public boolean saveDicType(DicType dicType) {
+        boolean flag = true;
+        int count = dicTypeDao.save(dicType);
+        if (count != 1){
+            flag = false;
+        }
+        return flag;
+    }
+
+    @Override
+    public boolean updateType(DicType dicType) {
+        boolean flag = true;
+        int count = dicTypeDao.update(dicType);
+        if (count != 1){
+            flag = false;
+        }
+        return flag;
+    }
 }

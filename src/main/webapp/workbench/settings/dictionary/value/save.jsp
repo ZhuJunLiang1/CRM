@@ -1,20 +1,62 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+String basePath = request.getScheme() + "://" + request.getServerName() + ":" +
+request.getServerPort() + request.getContextPath() + "/";
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
+	<base href="<%=basePath%>">
+<link href="jquery/bootstrap_3.3.0/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
+<link href="jquery/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet" />
 
-<link href="../../../jquery/bootstrap_3.3.0/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
-<link href="../../../jquery/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="jquery/jquery-1.11.1-min.js"></script>
+<script type="text/javascript" src="jquery/bootstrap_3.3.0/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+		$(function () {
+			$.ajax({
+				url:"settings/dic/value/getTypeCode.do",
+				type:"get",
+				dataType:"json",
+				success:function (data) {
+					var html = "<option></option>";
+					$.each(data,function (i,n) {
+						html += "<option value='"+n+ "'>" + n + "</option>";
+					})
+					$("#create-dicTypeCode").html(html);
+				}
+			})
+			$("#saveBtn").click(function () {
+				$.ajax({
+					url: "settings/dic/value/saveDicValue.do",
+					data:{
+						"typeCode":$.trim($("#create-dicTypeCode").val()),
+						"value":$.trim($("#create-dicValue").val()),
+						"text":$.trim($("#create-text").val()),
+						"orderNo":$.trim($("#create-orderNo").val())
+					},
+					type: "post",
+					dataType: "json",
+					success:function (data) {
+						if(data.success){
+							window.location="workbench/settings/dictionary/value/index.jsp";
+						}else {
+							alert("添加数据字典值失败！");
+						}
+					}
+				})
+			})
+		})
 
-<script type="text/javascript" src="../../../jquery/jquery-1.11.1-min.js"></script>
-<script type="text/javascript" src="../../../jquery/bootstrap_3.3.0/js/bootstrap.min.js"></script>
+	</script>
 </head>
 <body>
 
 	<div style="position:  relative; left: 30px;">
 		<h3>新增字典值</h3>
 	  	<div style="position: relative; top: -40px; left: 70%;">
-			<button type="button" class="btn btn-primary">保存</button>
+			<button type="button" class="btn btn-primary" id="saveBtn" >保存</button>
 			<button type="button" class="btn btn-default" onclick="window.history.back();">取消</button>
 		</div>
 		<hr style="position: relative; top: -40px;">
@@ -26,8 +68,6 @@
 			<div class="col-sm-10" style="width: 300px;">
 				<select class="form-control" id="create-dicTypeCode" style="width: 200%;">
 				  <option></option>
-				  <option>性别</option>
-				  <option>机构类型</option>
 				</select>
 			</div>
 		</div>

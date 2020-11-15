@@ -87,7 +87,6 @@ request.getContextPath() + "/";
                             操作后位置已经设置好的每页展现的记录数
                         */
                         pageList(1,$("#activityPage").bs_pagination('getOption', 'rowsPerPage'));
-
                         //清空添加操作模态窗口数据
 						/*
 							拿到了jquery对象，但是只有submit方法可用， reset方法无用
@@ -100,49 +99,31 @@ request.getContextPath() + "/";
 						$("#activityAddForm")[0].reset();
 						//关闭添加操作模态窗口
 						$("#createActivityModal").modal("hide");
+                        alert("添加市场活动成功")
 					}else {
 						alert("添加市场活动失败")
 					}
 				}
 			})
 		})
-		//局部刷新出来活动列表
-		/*
-			什么时候需要获取局部刷新。
-				点击市场活动
-				保存完毕后
-				修改完毕后
-				删除完毕后
-				查询后
-				点击分页组件时
-		 */
+
 		pageList(1,10);
 
 		//为查询按钮绑定事件，触发pageList方法
 		$("#searchBtn").click(function () {
-		    /*
-		    点击查询按钮的时候，应该将搜索框中信息保存，
-                使用隐藏域 保存。
-		    */
+		    //点击查询按钮的时候，将搜索框中信息使用隐藏域保存
             $("#hidden-name").val($.trim($("#search-name ").val()));
             $("#hidden-owner").val($.trim($("#search-owner").val()));
             $("#hidden-startDate").val($.trim($("#search-startDate").val()));
             $("#hidden-endDate").val($.trim($("#search-endDate").val()));
             //回到第一页，维持当前每页数据
             pageList(1,$("#activityPage").bs_pagination('getOption', 'rowsPerPage'));
-
         })
-
 
         //为全选复选框绑定事件，触发全选操作
         $("#checkAll").click(function () {
             $("input[name=check]").prop("checked",this.checked);
         })
-        //动态生成的元素不能以普通绑定事件形式来进行操作。
-        // $("input[name=check]").click(function () {
-        //
-        // })
-
         //动态生成的元素以 on 方法触发事件
         //语法：$(需要绑定的元素的有效的外层元素).on(事件，jquery对象，函数)
         $("#activityBody").on("click",$("input[name=check]"),function () {
@@ -175,6 +156,7 @@ request.getContextPath() + "/";
                             if(data.success){
                                 //回到第一页，维持 每页展现记录数
                                 pageList(1,$("#activityPage").bs_pagination('getOption', 'rowsPerPage'));
+                                alert("删除市场活动成功");
                             }else {
                                 alert("删除市场活动失败");
                             }
@@ -252,6 +234,7 @@ request.getContextPath() + "/";
                             ,$("#activityPage").bs_pagination('getOption', 'rowsPerPage'));
                         //关闭添加操作模态窗口
                         $("#editActivityModal").modal("hide");
+                        alert("修改市场活动成功")
                     }else {
                         alert("修改市场活动失败")
                     }
@@ -283,11 +266,6 @@ request.getContextPath() + "/";
 			type:"get",
 			dataType:"json",
 			success:function (data) {
-				/*
-					市场活动信息列表
-					分页插件需要的 ，查询出来的总记录数
-					{“total”：100,"dataList":[{市场活动1}，]}
-				 */
 				var html = "";
 				$.each(data.dataList,function (i,n) {
 					html += '<tr class="active">';
@@ -301,8 +279,7 @@ request.getContextPath() + "/";
                  $("#activityBody").html(html);
 				//计算总页数
                 var totalPages = data.total%pageSize == 0 ? data.total/pageSize : parseInt(data.total/pageSize)+1;
-
-				//数据处理完毕后，结合分页插件，
+				//数据处理完毕后，结合分页插件
                 $("#activityPage").bs_pagination({
                     currentPage: pageNo, // 页码
                     rowsPerPage: pageSize, // 每页显示的记录条数
@@ -441,8 +418,6 @@ request.getContextPath() + "/";
                             <!-- 关于文本域 textarea  一定要以标签对的形式来呈现 正常情况下要紧紧挨着
                                 textarea 虽然以标签对形式来呈现的，但是它也是属于表单元素范畴，
                                 我们所有的对于textarea的取指和赋值操作应统一使用val（）方法
-
-
                              -->
                             <textarea class="form-control" rows="3" id="edit-description"></textarea>
                         </div>
@@ -458,8 +433,6 @@ request.getContextPath() + "/";
     </div>
 </div>
 
-
-
     <div>
     <div style="position: relative; left: 10px; top: -10px;">
         <div class="page-header">
@@ -473,7 +446,6 @@ request.getContextPath() + "/";
 
         <div class="btn-toolbar" role="toolbar" style="height: 80px;">
             <form class="form-inline" role="form" style="position: relative;top: 8%; left: 5px;">
-
                 <div class="form-group">
                     <div class="input-group">
                         <div class="input-group-addon">名称</div>
@@ -507,18 +479,6 @@ request.getContextPath() + "/";
         </div>
         <div class="btn-toolbar" role="toolbar" style="background-color: #F7F7F7; height: 50px; position: relative;top: 5px;">
             <div class="btn-group" style="position: relative; top: 18%;">
-                <!-- 点击创建按钮，观察属性和属性值
-                     data-toggle=modal
-                           表示触发该按钮，将要打开一个模态窗口
-                       data-target=“#xxx”
-                           要打开哪个模态窗口
-                       现在是以属性和属性值的方式写在了button元素中，用来打开模态装口
-                       但是这样做有问题：
-                           没有办法对按钮的功能进行拓展
-
-                       所以未来实际项目中，对于触发模态窗口的操作，一定不要写死在元素中，
-                       由自己写js代码来操作
-                                  -->
                 <button type="button" class="btn btn-primary" id="addBtn"  ><span class="glyphicon glyphicon-plus"></span> 创建</button>
                 <button type="button" class="btn btn-default" id="editBtn"><span class="glyphicon glyphicon-pencil"></span> 修改</button>
                 <button type="button" class="btn btn-danger" id="deleteBtn"><span class="glyphicon glyphicon-minus"></span> 删除</button>

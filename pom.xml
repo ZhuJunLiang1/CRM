@@ -95,6 +95,11 @@
       <version>1.18.4</version>
       <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-aspects</artifactId>
+      <version>5.2.5.RELEASE</version>
+    </dependency>
   </dependencies>
   <build>
     <resources>

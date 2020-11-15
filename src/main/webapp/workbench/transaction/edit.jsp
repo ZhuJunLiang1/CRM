@@ -307,7 +307,7 @@ request.getContextPath() + "/";
 			<label for="edit-activityName" class="col-sm-2 control-label">市场活动源&nbsp;&nbsp;<a href="javascript:void(0);" data-toggle="modal" data-target="#searchActivityModal"><span class="glyphicon glyphicon-search"></span></a></label>
 			<div class="col-sm-10" style="width: 300px;">
 				<input type="text" class="form-control" id="edit-activityName" value="${tran.activityId}">
-				<input type="text" name="activityId" id="activityId" value="${activityId}">
+				<input type="hidden" name="activityId" id="activityId" value="${activityId}">
 			</div>
 		</div>
 		
@@ -315,7 +315,7 @@ request.getContextPath() + "/";
 			<label for="edit-contactsName" class="col-sm-2 control-label">联系人名称&nbsp;&nbsp;<a href="javascript:void(0);" data-toggle="modal" data-target="#findContacts"><span class="glyphicon glyphicon-search"></span></a></label>
 			<div class="col-sm-10" style="width: 300px;">
 				<input type="text" class="form-control" id="edit-contactsName" value="${tran.contactsId}">
-				<input type="text" name="contactsId" id="contactsId" value="${contactsId}">
+				<input type="hidden" name="contactsId" id="contactsId" value="${contactsId}">
 			</div>
 		</div>
 		

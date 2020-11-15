@@ -10,7 +10,9 @@ import com.zjl.crm.workbench.service.ActivityService;
 import com.zjl.crm.workbench.service.ClueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -20,7 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
+@CrossOrigin
 @Controller
 @RequestMapping("/workbench/clue")
 public class ClueController {
@@ -32,13 +34,13 @@ public class ClueController {
     @Resource
     private ActivityService activityService;
 
-    @RequestMapping("/getUserList.do")
+    @RequestMapping(value = "/getUserList.do",method = RequestMethod.GET)
     @ResponseBody
     public List<User> getUserList(){
         List<User> userList = userService.getUserList();
         return userList;
     }
-    @RequestMapping("/save.do")
+    @RequestMapping(value = "/save.do",method = RequestMethod.POST)
     @ResponseBody
     public Map<String,Object> save(Clue clue, HttpServletRequest request){
         clue.setId(UUIDUtil.getUUID());
@@ -50,9 +52,9 @@ public class ClueController {
         map.put("success",flag);
         return map;
     }
-    @RequestMapping("/pageList.do")
+    @RequestMapping(value = "/pageList.do",method = RequestMethod.GET)
     @ResponseBody
-    public Object pageList(Clue clue,Integer pageNo,Integer pageSize){
+    public PageinationVO pageList(Clue clue,Integer pageNo,Integer pageSize){
         Map<String,Object> map = new HashMap<>();
         Integer skipCount = (pageNo-1)*pageSize;
         map.put("clue",clue);
@@ -61,7 +63,7 @@ public class ClueController {
         PageinationVO<Clue> vo = clueService.pageList(map);
         return vo;
     }
-    @RequestMapping("/delete.do")
+    @RequestMapping(value = "/delete.do",method = RequestMethod.POST)
     @ResponseBody
     public Map<String,Object> delete(HttpServletRequest request){
         String ids[] = request.getParameterValues("id");
@@ -70,16 +72,16 @@ public class ClueController {
         map.put("success",flag);
         return map;
     }
-    @RequestMapping("/getUserListAndClue.do")
+    @RequestMapping(value = "/getUserListAndClue.do",method = RequestMethod.GET)
     @ResponseBody
-    public Map<String,Object> getUserListAndActivity(String id){
+    public Map<String,Object> getUserListAndClue(String id){
         /*
             controller 调用service方法，返回值应该是什么， 就从Service要什么
          */
-        Map<String,Object> map = clueService.getUserListAndActivity(id);
+        Map<String,Object> map = clueService.getUserListAndClue(id);
         return map;
     }
-    @RequestMapping("/update.do")
+    @RequestMapping(value = "/update.do",method = RequestMethod.POST)
     @ResponseBody
     public Map<String,Object> update(Clue clue, HttpServletRequest request){
         //系统当前时间
@@ -93,21 +95,21 @@ public class ClueController {
         map.put("success",flag);
         return map;
     }
-    @RequestMapping("/detail.do")
+    @RequestMapping(value = "/detail.do",method = RequestMethod.GET)
     public ModelAndView detail(String id){
         ModelAndView mv = new ModelAndView();
         Clue clue = clueService.detail(id);
         mv.addObject("clue",clue);
-        mv.setViewName("forward:/workbench/clue/detail.jsp");
+        mv.setViewName("/workbench/clue/detail.jsp");
         return mv;
     }
-    @RequestMapping("/getRemarkListById.do")
+    @RequestMapping(value = "/getRemarkListById.do",method = RequestMethod.GET)
     @ResponseBody
     public List<ClueRemark> getRemarkListById(String clueId){
         List<ClueRemark> remarkList = clueService.getRemarkListById(clueId);
         return remarkList;
     }
-    @RequestMapping("/deleteRemark.do")
+    @RequestMapping(value = "/deleteRemark.do",method = RequestMethod.POST)
     @ResponseBody
     public Map<String,Object> deleteRemark(String id){
         boolean flag = clueService.deleteRemark(id);
@@ -115,7 +117,7 @@ public class ClueController {
         map.put("success",flag);
         return map;
     }
-    @RequestMapping("/saveRemark.do")
+    @RequestMapping(value = "/saveRemark.do",method = RequestMethod.POST)
     @ResponseBody
     public Map<String,Object> saveRemark(ClueRemark clueRemark, HttpServletRequest request){
         clueRemark.setId(UUIDUtil.getUUID());
@@ -128,7 +130,7 @@ public class ClueController {
         map.put("success",flag);
         return map;
     }
-    @RequestMapping("/updateRemark.do")
+    @RequestMapping(value = "/updateRemark.do",method = RequestMethod.POST)
     @ResponseBody
     public Map<String,Object> updateRemark(ClueRemark clueRemark,HttpServletRequest request){
         clueRemark.setEditTime(DateTimeUtil.getSysTime());
@@ -140,14 +142,14 @@ public class ClueController {
         map.put("clueRemark",clueRemark);
         return map;
     }
-    @RequestMapping("/getActivityListByClueId")
+    @RequestMapping(value = "/getActivityListByClueId",method = RequestMethod.GET)
     @ResponseBody
     public List<Activity> getActivityListByClueId(String clueId){
 
         List<Activity> activityList = activityService.getActivityListByClueId(clueId);
         return activityList;
     }
-    @RequestMapping("/unbund")
+    @RequestMapping(value = "/unbund",method = RequestMethod.POST)
     @ResponseBody
     public Map<String,Object> unbund(String id){
         boolean flag = clueService.unbund(id);
@@ -155,7 +157,7 @@ public class ClueController {
         map.put("success",flag);
         return map;
     }
-    @RequestMapping("/getActivityListByNameAndNotByClueId.do")
+    @RequestMapping(value = "/getActivityListByNameAndNotByClueId.do",method = RequestMethod.GET)
     @ResponseBody
     public List<Activity> getActivityListByNameAndNotByClueId(String activityName,String clueId){
         Map<String,Object> map = new HashMap<>();
@@ -164,7 +166,7 @@ public class ClueController {
         List<Activity> activityList = activityService.getActivityListByNameAndNotByClueId(map);
         return activityList;
     }
-    @RequestMapping("/bund.do")
+    @RequestMapping(value = "/bund.do",method = RequestMethod.POST)
     @ResponseBody
     public Map<String,Object> bund(String clueId,HttpServletRequest request){
         String[] aids = request.getParameterValues("activityId");
@@ -173,13 +175,13 @@ public class ClueController {
         map.put("success",flag);
         return map;
     }
-    @RequestMapping("/getActivityListByName.do")
+    @RequestMapping(value = "/getActivityListByName.do",method = RequestMethod.GET)
     @ResponseBody
     public List<Activity> getActivityListByName(String activityName){
         List<Activity> activityList = activityService.getActivityListByName(activityName);
         return activityList;
     }
-    @RequestMapping("/convert.do")
+    @RequestMapping(value = "/convert.do",method = RequestMethod.POST)
     public ModelAndView convert(String clueId,String flag,Tran tran,HttpServletRequest request){
         String createBy = ((User)request.getSession().getAttribute("user")).getName();
         if("a".equals(flag)){
@@ -196,7 +198,7 @@ public class ClueController {
         }
         return mv;
     }
-    @RequestMapping("/getCharts.do")
+    @RequestMapping(value = "/getCharts.do",method = RequestMethod.GET)
     @ResponseBody
     public Map<String ,Object> getCharts(){
         return clueService.getCharts();

@@ -188,6 +188,7 @@
 						html += '</div>';
 						$("#remarkDiv").before(html);
 						$("#remark").val("");
+						alert("添加备注成功！");
 					}else {
 						alert("添加备注失败！");
 					}
@@ -215,6 +216,7 @@
 						$("#e"+id).html(data.customerRemark.noteContent);
 						$("#s"+id).html(data.customerRemark.editTime + "由"+ data.customerRemark.editBy+"修改");
 						$("#editRemarkModal").modal("hide");
+						alert("修改备注成功！");
 					}else {
 						alert("修改备注失败！");
 					}
@@ -261,6 +263,7 @@
 					if(data.success){
 						showContactsList();
 						$("#createContactsModal").modal("hide");
+						alert("添加相关联系人成功")
 					}else {
 						alert("添加联系人失败")
 					}
@@ -328,8 +331,9 @@
 					//记录使用的是before方法，每一次删除后会保留所有数据
 					// showRemarkList();
 					$("#"+id).remove();
+					alert("删除备注成功");
 				}else {
-					alert("删除失败");
+					alert("删除备注失败");
 				}
 			}
 		})
@@ -373,6 +377,7 @@
 					if(data.success){
 						showTranList();
 						$("#removeTransactionModal").modal("hide");
+						alert("删除该条交易成功！")
 					}else {
 						$("#removeTransactionModal").modal("hide");
 						alert("删除该条交易失败！")
@@ -417,9 +422,10 @@
 					if(data.success){
 						showContactsList();
 						$("#removeContactsModal").modal("hide");
+						alert("删除相关联系人成功！")
 					}else {
 						$("#removeContactsModal").modal("hide");
-						alert("删除该条交易失败！")
+						alert("删除相关联系人失败！")
 					}
 				}
 			})
@@ -710,7 +716,7 @@
 	<div style="position: relative; left: 40px; top: -30px;">
 		<div class="page-header">
 			<input type="hidden" id="detail-id" value="${customer.id}">
-			<h3 id="title-customer">&nbsp;${customer.name}<small><a href="${customer.website}" target="_blank"> &nbsp;${customer.website}</a></small></h3>
+			<h3 id="title-customer">&nbsp;${customer.name} &nbsp;&nbsp;<small><a href="${customer.website}" target="_blank"> &nbsp;${customer.website} &nbsp;&nbsp;</a></small></h3>
 		</div>
 		<div style="position: relative; height: 50px; width: 500px;  top: -72px; left: 700px;">
 			<button type="button" class="btn btn-default" id="edit_customer"><span class="glyphicon glyphicon-edit"></span> 编辑</button>
@@ -730,9 +736,9 @@
 		</div>
 		<div style="position: relative; left: 40px; height: 30px; top: 10px;">
 			<div style="width: 300px; color: gray;">公司网站</div>
-			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b id="detail-website">${customer.website}</b></div>
+			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b id="detail-website">${customer.website} &nbsp;&nbsp;</b></div>
 			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">公司座机</div>
-			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b id="detail-phone">${customer.phone}</b></div>
+			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b id="detail-phone">${customer.phone} &nbsp;&nbsp;</b></div>
 			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>
 			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
 		</div>
@@ -749,27 +755,27 @@
         <div style="position: relative; left: 40px; height: 30px; top: 40px;">
             <div style="width: 300px; color: gray;">联系纪要</div>
             <div style="width: 630px;position: relative; left: 200px; top: -20px;">
-                <b id="detail-contactSummary">${customer.contactSummary}
+                <b id="detail-contactSummary">${customer.contactSummary} &nbsp;&nbsp;
                 </b>
             </div>
             <div style="height: 1px; width: 850px; background: #D5D5D5; position: relative; top: -20px;"></div>
         </div>
         <div style="position: relative; left: 40px; height: 30px; top: 50px;">
             <div style="width: 300px; color: gray;">下次联系时间</div>
-            <div style="width: 300px;position: relative; left: 200px; top: -20px;"><b id="detail-nextContactTime">${customer.nextContactTime}</b></div>
+            <div style="width: 300px;position: relative; left: 200px; top: -20px;"><b id="detail-nextContactTime">${customer.nextContactTime} &nbsp;&nbsp;</b></div>
             <div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -20px; "></div>
         </div>
 		<div style="position: relative; left: 40px; height: 30px; top: 60px;">
 			<div style="width: 300px; color: gray;">描述</div>
 			<div style="width: 630px;position: relative; left: 200px; top: -20px;">
-				<b id="detail-description">${customer.description}</b>
+				<b id="detail-description">${customer.description} &nbsp;&nbsp;</b>
 			</div>
 			<div style="height: 1px; width: 850px; background: #D5D5D5; position: relative; top: -20px;"></div>
 		</div>
         <div style="position: relative; left: 40px; height: 30px; top: 70px;">
             <div style="width: 300px; color: gray;">详细地址</div>
             <div style="width: 630px;position: relative; left: 200px; top: -20px;">
-                <b id="detail-address">${customer.address}</b>
+                <b id="detail-address">${customer.address} &nbsp;&nbsp;</b>
             </div>
             <div style="height: 1px; width: 850px; background: #D5D5D5; position: relative; top: -20px;"></div>
         </div>

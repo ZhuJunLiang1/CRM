@@ -18,7 +18,7 @@ public class LoginFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         String path = request.getServletPath();
-        if ("/login.jsp".equals(path) || "/settings/user/login.do".equals(path)) {
+        if ("/login.jsp".equals(path) || "/settings/user/login.do".equals(path) || "/settings/user/getCheckCode.do".equals(path) || "/settings/user/register.do".equals(path)){
             filterChain.doFilter(servletRequest, servletResponse);
         } else {
             User user = (User) request.getSession().getAttribute("user");

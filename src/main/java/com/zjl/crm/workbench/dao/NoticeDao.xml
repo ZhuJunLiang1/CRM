@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zjl.crm.workbench.dao.NoticeDao">
+    <select id="getTotal" resultType="int">
+        select count(*) from tbl_notice
+    </select>
+
+    <insert id="save">
+        insert into tbl_notice(id, noteContent, createBy, createTime)
+            values (#{id},#{noteContent},#{createBy},#{createTime})
+    </insert>
+    <select id="getListByPage" resultType="Notice">
+        select id,noteContent,createTime,createBy from tbl_notice order by createTime desc
+            limit #{skipCount},#{pageSize}
+    </select>
+
+    <delete id="deleteById" >
+        delete from tbl_notice where id=#{id}
+    </delete>
+</mapper>

@@ -4,7 +4,42 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zjl.crm.settings.dao.DicValueDao">
     <select id="getListByCode" resultType="com.zjl.crm.settings.domain.DicValue">
-        select * from tbl_dic_value where typeCode = #{code} order by orderNo
+        select * from tbl_dic_value where typeCode=#{code} order by orderNo
     </select>
-
+    <select id="getValList" resultType="DicValue">
+        select * from tbl_dic_value order by typeCode
+    </select>
+    <delete id="delete">
+        delete from tbl_dic_value
+        where id in
+        <foreach collection="array" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+    <select id="getTypeCode" resultType="String">
+        select distinct typeCode from tbl_dic_value
+    </select>
+    <insert id="save">
+        insert into tbl_dic_value
+        values (
+        #{id},
+        #{value},
+        #{text},
+        #{orderNo},
+        #{typeCode}
+        )
+    </insert>
+    <select id="getDicValueById" resultType="DicValue">
+        select * from tbl_dic_value
+        where id=#{id}
+    </select>
+    <update id="update" >
+        update tbl_dic_value
+        set
+        typeCode=#{typeCode},
+        value=#{value},
+        text=#{text},
+        orderNo=#{orderNo}
+        where id=#{id}
+    </update>
 </mapper>

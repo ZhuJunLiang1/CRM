@@ -11,7 +11,9 @@ import com.zjl.crm.workbench.service.ContactsService;
 import com.zjl.crm.workbench.service.CustomerService;
 import com.zjl.crm.workbench.service.TranService;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -20,21 +22,29 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 @SuppressWarnings("unchecked")
+@CrossOrigin
 @Controller
 @RequestMapping("/workbench/transaction")
 public class TranController {
+
     @Resource
     private TranService tranService;
+
     @Resource
     private UserService userService;
+
     @Resource
     private ActivityService activityService;
+
     @Resource
     private ContactsService contactsService;
+
     @Resource
     private CustomerService customerService;
-    @RequestMapping("/add.do")
+
+    @RequestMapping(value = "/add.do",method = RequestMethod.GET)
     public ModelAndView add(){
         List<User> uList = userService.getUserList();
         ModelAndView mv = new ModelAndView();
@@ -42,7 +52,8 @@ public class TranController {
         mv.setViewName("save.jsp");
         return mv;
     }
-    @RequestMapping("/pageList.do")
+
+    @RequestMapping(value = "/pageList.do",method = RequestMethod.GET)
     @ResponseBody
     public PageinationVO<Tran> pageList(Tran tran,Integer pageNo,Integer pageSize){
         Map<String,Object> map = new HashMap<>();
@@ -53,23 +64,26 @@ public class TranController {
         PageinationVO<Tran> vo = tranService.pageList(map);
         return vo;
     }
-    @RequestMapping("/getActivityListByName.do")
+
+    @RequestMapping(value = "/getActivityListByName.do",method = RequestMethod.GET)
     @ResponseBody
     public List<Activity> getActivityListByName(String activityName){
         return activityService.getActivityListByName(activityName);
     }
-    @RequestMapping("/getContactsListByName.do")
+
+    @RequestMapping(value = "/getContactsListByName.do",method = RequestMethod.GET)
     @ResponseBody
     public List<Contacts> getContactsListByName(String contactsName){
         return contactsService.getContactsListByName(contactsName);
     }
-    @RequestMapping("/getCustomerName.do")
+
+    @RequestMapping(value = "/getCustomerName.do",method = RequestMethod.GET)
     @ResponseBody
     public List<String> getCustomerName(String name){
         return customerService.getCustomerName(name);
     }
 
-    @RequestMapping("/save.do")
+    @RequestMapping(value = "/save.do",method = RequestMethod.POST)
     public ModelAndView save(Tran tran, String customerName, HttpServletRequest request){
         tran.setId(UUIDUtil.getUUID());
         tran.setCreateTime(DateTimeUtil.getSysTime());
@@ -81,7 +95,8 @@ public class TranController {
         }
         return mv;
     }
-    @RequestMapping("/detail.do")
+
+    @RequestMapping(value = "/detail.do",method = RequestMethod.GET)
     public ModelAndView detail(String id, HttpServletRequest request){
         Tran tran = tranService.detail(id);
         String stage = tran.getStage();
@@ -93,7 +108,8 @@ public class TranController {
         mv.setViewName("detail.jsp");
         return mv;
     }
-    @RequestMapping("/getHistoryListByTranId.do")
+
+    @RequestMapping(value = "/getHistoryListByTranId.do",method = RequestMethod.GET)
     @ResponseBody
     public List<TranHistory> getHistoryListByTranId(String tranId,HttpServletRequest request){
         List<TranHistory> tranHistoryList = tranService.getHistoryListByTranId(tranId);
@@ -105,12 +121,14 @@ public class TranController {
         }
         return tranHistoryList;
     }
-    @RequestMapping("/getRemarkListByTranId.do")
+
+    @RequestMapping(value = "/getRemarkListByTranId.do",method = RequestMethod.GET)
     @ResponseBody
     public List<TranRemark> getRemarkListByTranId(String tranId){
         return tranService.getRemarkListByTranId(tranId);
     }
-    @RequestMapping("/saveRemark.do")
+
+    @RequestMapping(value = "/saveRemark.do",method = RequestMethod.POST)
     @ResponseBody
     public Map<String,Object> saveRemark(TranRemark tranRemark,HttpServletRequest request){
         tranRemark.setId(UUIDUtil.getUUID());
@@ -123,7 +141,8 @@ public class TranController {
         map.put("tranRemark",tranRemark);
         return map;
     }
-    @RequestMapping("/updateRemark.do")
+
+    @RequestMapping(value = "/updateRemark.do",method = RequestMethod.POST)
     @ResponseBody
     public Map<String,Object> updateRemark(TranRemark tranRemark,HttpServletRequest request){
         tranRemark.setEditTime(DateTimeUtil.getSysTime());
@@ -135,7 +154,8 @@ public class TranController {
         map.put("tranRemark",tranRemark);
         return map;
     }
-    @RequestMapping("/deleteTranRemarkById.do")
+
+    @RequestMapping(value = "/deleteTranRemarkById.do",method = RequestMethod.POST)
     @ResponseBody
     public Map<String,Object> deleteTranRemarkById(String id){
         boolean flag = tranService.deleteTranRemarkById(id);
@@ -143,7 +163,8 @@ public class TranController {
         map.put("success",flag);
         return map;
     }
-    @RequestMapping("/changeStage.do")
+
+    @RequestMapping(value = "/changeStage.do",method = RequestMethod.POST)
     @ResponseBody
     public Map<String,Object> changeStage(Tran tran,HttpServletRequest request){
         tran.setEditTime(DateTimeUtil.getSysTime());
@@ -156,7 +177,8 @@ public class TranController {
         map.put("success",flag);
         return map;
     }
-    @RequestMapping("/delete.do")
+
+    @RequestMapping(value = "/delete.do",method = RequestMethod.POST)
     @ResponseBody
     public Map<String,Boolean> delete(HttpServletRequest request){
         String ids[] = request.getParameterValues("id");
@@ -165,7 +187,8 @@ public class TranController {
         map.put("success",flag);
         return map;
     }
-    @RequestMapping("/deleteFromDetail.do")
+
+    @RequestMapping(value = "/deleteFromDetail.do",method = RequestMethod.POST)
     @ResponseBody
     public Map<String,Boolean> deleteFromDetail(HttpServletRequest request){
         String ids[] = request.getParameterValues("id");
@@ -174,7 +197,8 @@ public class TranController {
         map.put("success",flag);
         return map;
     }
-    @RequestMapping("/edit.do")
+
+    @RequestMapping(value = "/edit.do",method = RequestMethod.GET)
     public ModelAndView edit(String id,HttpServletRequest request){
         ModelAndView mv = new ModelAndView();
         List<User> uList = userService.getUserList();
@@ -196,7 +220,8 @@ public class TranController {
         mv.setViewName("edit.jsp");
         return mv;
     }
-    @RequestMapping("/update.do")
+
+    @RequestMapping(value = "/update.do",method = RequestMethod.POST)
     @ResponseBody
     public ModelAndView update(Tran tran,String customerName,HttpServletRequest request){
         tran.setEditBy(((User)request.getSession().getAttribute("user")).getName());
@@ -208,7 +233,8 @@ public class TranController {
         }
         return mv;
     }
-    @RequestMapping("/getCharts.do")
+
+    @RequestMapping(value = "/getCharts.do",method = RequestMethod.GET)
     @ResponseBody
     public Map<String ,Object> getCharts(){
         return tranService.getCharts();

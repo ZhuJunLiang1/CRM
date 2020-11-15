@@ -9,6 +9,7 @@ import com.zjl.crm.workbench.service.ContactsService;
 import com.zjl.crm.workbench.service.CustomerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -21,14 +22,16 @@ import java.util.Map;
 @Controller
 @RequestMapping("/workbench/customer")
 public class CustomerController {
+
     @Resource
     private CustomerService customerService;
+
     @Resource
     private ContactsService contactsService;
 
-    @RequestMapping("/pageList.do")
+    @RequestMapping(value = "/pageList.do",method = RequestMethod.GET)
     @ResponseBody
-    public Object pageList(Customer customer, Integer pageNo, Integer pageSize){
+    public PageinationVO<Customer> pageList(Customer customer, Integer pageNo, Integer pageSize){
         Map<String,Object> map = new HashMap<>();
         Integer skipCount = (pageNo-1)*pageSize;
         map.put("customer",customer);
@@ -37,13 +40,15 @@ public class CustomerController {
         PageinationVO<Customer> vo = customerService.pageList(map);
         return vo;
     }
-    @RequestMapping("/getUserList.do")
+
+    @RequestMapping(value = "/getUserList.do",method = RequestMethod.GET)
     @ResponseBody
     public List<User> getUserList(){
         List<User> userList = customerService.getUserList();
         return userList;
     }
-    @RequestMapping("/save.do")
+
+    @RequestMapping(value = "/save.do",method = RequestMethod.POST)
     @ResponseBody
     public Map<String,Object> save(Customer customer, HttpServletRequest request){
         //创建人 当前登录用户
@@ -56,7 +61,8 @@ public class CustomerController {
         map.put("success",flag);
         return map;
     }
-    @RequestMapping("/delete.do")
+
+    @RequestMapping(value = "/delete.do",method = RequestMethod.POST)
     @ResponseBody
     public Map<String,Object> delete(HttpServletRequest request){
         String ids[] = request.getParameterValues("id");
@@ -65,13 +71,15 @@ public class CustomerController {
         map.put("success",flag);
         return map;
     }
-    @RequestMapping("/getUserListAndCustomer.do")
+
+    @RequestMapping(value = "/getUserListAndCustomer.do",method = RequestMethod.GET)
     @ResponseBody
     public Map<String,Object> getUserListAndCustomer(String id){
         Map<String,Object> map = customerService.getUserListAndCustomer(id);
         return map;
     }
-    @RequestMapping("/update.do")
+
+    @RequestMapping(value = "/update.do",method = RequestMethod.POST)
     @ResponseBody
     public Map<String,Object> update(Customer customer, HttpServletRequest request){
         //修改人 当前登录用户
@@ -83,18 +91,20 @@ public class CustomerController {
         return map;
     }
 
-    @RequestMapping("/detail.do")
+    @RequestMapping(value = "/detail.do",method = RequestMethod.GET)
     public String detail(String id,HttpServletRequest request){
         Customer customer = customerService.detail(id);
         request.setAttribute("customer",customer);
         return "/workbench/customer/detail.jsp";
     }
-    @RequestMapping("/detail1.do")
+
+    @RequestMapping(value = "/detail1.do",method = RequestMethod.GET)
     @ResponseBody
     public Customer detail1(String id){
         return customerService.detail(id);
     }
-    @RequestMapping("/deleteById.do")
+
+    @RequestMapping(value = "/deleteById.do",method = RequestMethod.POST)
     @ResponseBody
     public Map<String,Object> deleteById(String id){
         boolean flag = customerService.deleteById(id);
@@ -102,13 +112,15 @@ public class CustomerController {
         map.put("success",flag);
         return map;
     }
-    @RequestMapping("/getRemarkListById.do")
+
+    @RequestMapping(value = "/getRemarkListById.do",method = RequestMethod.GET)
     @ResponseBody
     public List<CustomerRemark> getRemarkListById(String customerId){
         List<CustomerRemark> remarkList = customerService.getRemarkListById(customerId);
         return remarkList;
     }
-    @RequestMapping("/deleteRemark.do")
+
+    @RequestMapping(value = "/deleteRemark.do",method = RequestMethod.POST)
     @ResponseBody
     public Map<String,Object> deleteRemark(String id){
         boolean flag = customerService.deleteRemark(id);
@@ -116,7 +128,8 @@ public class CustomerController {
         map.put("success",flag);
         return map;
     }
-    @RequestMapping("/saveRemark.do")
+
+    @RequestMapping(value = "/saveRemark.do",method = RequestMethod.POST)
     @ResponseBody
     public Map<String,Object> saveRemark(CustomerRemark customerRemark,HttpServletRequest request){
         customerRemark.setId(UUIDUtil.getUUID());
@@ -129,7 +142,8 @@ public class CustomerController {
         map.put("success",flag);
         return map;
     }
-    @RequestMapping("/updateRemark.do")
+
+    @RequestMapping(value = "/updateRemark.do",method = RequestMethod.POST)
     @ResponseBody
     public Map<String,Object> updateRemark(CustomerRemark customerRemark,HttpServletRequest request){
         customerRemark.setEditTime(DateTimeUtil.getSysTime());
@@ -141,7 +155,8 @@ public class CustomerController {
         map.put("customerRemark",customerRemark);
         return map;
     }
-    @RequestMapping("/getTranListByCustomerId.do")
+
+    @RequestMapping(value = "/getTranListByCustomerId.do",method = RequestMethod.GET)
     @ResponseBody
     public List<Tran> getTranListByCustomerId(String customerId,HttpServletRequest request){
         List<Tran> tranList = customerService.getTranListByCustomerId(customerId);
@@ -151,7 +166,8 @@ public class CustomerController {
         }
         return tranList;
     }
-    @RequestMapping("/deleteTranById.do")
+
+    @RequestMapping(value = "/deleteTranById.do",method = RequestMethod.POST)
     @ResponseBody
     public Map<String,Object> deleteTranById(String id){
         boolean flag = customerService.deleteTranById(id);
@@ -159,13 +175,15 @@ public class CustomerController {
         map.put("success",flag);
         return map;
     }
-    @RequestMapping("/getContactsListByCustomerId.do")
+
+    @RequestMapping(value = "/getContactsListByCustomerId.do",method = RequestMethod.GET)
     @ResponseBody
     public List<Contacts> getContactsListByCustomerId(String customerId){
         List<Contacts> contactsList = customerService.getContactsListByCustomerId(customerId);
         return contactsList;
     }
-    @RequestMapping("/deleteContactById.do")
+
+    @RequestMapping(value = "/deleteContactById.do",method = RequestMethod.POST)
     @ResponseBody
     public Map<String,Object> deleteContactById(String id){
         boolean flag = customerService.deleteContactById(id);
@@ -173,7 +191,8 @@ public class CustomerController {
         map.put("success",flag);
         return map;
     }
-    @RequestMapping("/addContact.do")
+
+    @RequestMapping(value = "/addContact.do",method = RequestMethod.POST)
     @ResponseBody
     public Map<String,Object> addContact(Contacts contacts,HttpServletRequest request){
         contacts.setId(UUIDUtil.getUUID());
@@ -184,7 +203,8 @@ public class CustomerController {
         map.put("success",flag);
         return map;
     }
-    @RequestMapping("/getCharts.do")
+
+    @RequestMapping(value = "/getCharts.do",method = RequestMethod.GET)
     @ResponseBody
     public Map<String ,Object> getCharts(){
         return customerService.getCharts();

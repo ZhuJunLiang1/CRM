@@ -10,6 +10,7 @@ import com.zjl.crm.workbench.domain.ActivityRemark;
 import com.zjl.crm.workbench.service.ActivityService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -27,13 +28,13 @@ public class ActivityController {
     @Resource
     private UserService userService;
 
-    @RequestMapping("/getUserList.do")
+    @RequestMapping(value = "/getUserList.do",method = RequestMethod.GET)
     @ResponseBody
     public List<User> getUserList(){
         List<User> userList = userService.getUserList();
         return userList;
     }
-    @RequestMapping("/save.do")
+    @RequestMapping(value = "/save.do",method = RequestMethod.POST)
     @ResponseBody
     public Map<String,Object> save(Activity activity,HttpServletRequest request){
         String id = UUIDUtil.getUUID();
@@ -49,9 +50,9 @@ public class ActivityController {
         map.put("success",flag);
         return map;
     }
-    @RequestMapping("/pageList.do")
+    @RequestMapping(value = "/pageList.do",method = RequestMethod.GET)
     @ResponseBody
-    public Object pageList(Activity activity,Integer pageNo,Integer pageSize){
+    public PageinationVO pageList(Activity activity,Integer pageNo,Integer pageSize){
         Map<String,Object> map = new HashMap<>();
         Integer skipCount = (pageNo-1)*pageSize;
         map.put("activity",activity);
@@ -60,7 +61,7 @@ public class ActivityController {
         PageinationVO<Activity> vo = activityService.pageList(map);
         return vo;
     }
-    @RequestMapping("/delete.do")
+    @RequestMapping(value = "/delete.do",method = RequestMethod.POST)
     @ResponseBody
     public Map<String,Object> delete(HttpServletRequest request){
         String ids[] = request.getParameterValues("id");
@@ -69,7 +70,7 @@ public class ActivityController {
         map.put("success",flag);
         return map;
     }
-    @RequestMapping("/getUserListAndActivity.do")
+    @RequestMapping(value = "/getUserListAndActivity.do",method = RequestMethod.GET)
     @ResponseBody
     public Map<String,Object> getUserListAndActivity(String id){
         /*
@@ -78,7 +79,7 @@ public class ActivityController {
         Map<String,Object> map = activityService.getUserListAndActivity(id);
         return map;
     }
-    @RequestMapping("/update.do")
+    @RequestMapping(value = "/update.do",method = RequestMethod.POST)
     @ResponseBody
     public Map<String,Object> update(Activity activity, HttpServletRequest request){
         //系统当前时间
@@ -93,29 +94,29 @@ public class ActivityController {
         return map;
     }
 
-    @RequestMapping("/detail.do")
+    @RequestMapping(value = "/detail.do",method = RequestMethod.GET)
     public ModelAndView detail(String id){
         ModelAndView mv = new ModelAndView();
         Activity activity = activityService.detail(id);
         mv.addObject("activity",activity);
-        mv.setViewName("forward:/workbench/activity/detail.jsp");
+        mv.setViewName("/workbench/activity/detail.jsp");
         return mv;
     }
 
     //详情页编辑按钮的更新操作
-    @RequestMapping("/detail1.do")
+    @RequestMapping(value = "/detail1.do",method = RequestMethod.GET)
     @ResponseBody
     public Activity detail1(String id){
         return activityService.detail(id);
     }
 
-    @RequestMapping("/getRemarkListById.do")
+    @RequestMapping(value = "/getRemarkListById.do",method = RequestMethod.GET)
     @ResponseBody
     public List<ActivityRemark> getRemarkListById(String activityId){
         List<ActivityRemark> remarkList = activityService.getRemarkListById(activityId);
         return remarkList;
     }
-    @RequestMapping("/deleteRemark.do")
+    @RequestMapping(value = "/deleteRemark.do",method = RequestMethod.POST)
     @ResponseBody
     public Map<String,Object> deleteRemark(String id){
         boolean flag = activityService.deleteRemark(id);
@@ -123,7 +124,7 @@ public class ActivityController {
         map.put("success",flag);
         return map;
     }
-    @RequestMapping("/saveRemark.do")
+    @RequestMapping(value = "/saveRemark.do",method = RequestMethod.POST)
     @ResponseBody
     public Map<String,Object> saveRemark(ActivityRemark activityRemark,HttpServletRequest request){
         activityRemark.setId(UUIDUtil.getUUID());
@@ -136,7 +137,7 @@ public class ActivityController {
         map.put("success",flag);
         return map;
     }
-    @RequestMapping("/updateRemark.do")
+    @RequestMapping(value = "/updateRemark.do",method = RequestMethod.POST)
     @ResponseBody
     public Map<String,Object> updateRemark(ActivityRemark activityRemark,HttpServletRequest request){
         activityRemark.setEditTime(DateTimeUtil.getSysTime());
@@ -148,7 +149,7 @@ public class ActivityController {
         map.put("activityRemark",activityRemark);
         return map;
     }
-    @RequestMapping("/getCharts.do")
+    @RequestMapping(value = "/getCharts.do",method = RequestMethod.GET)
     @ResponseBody
     public Map<String ,Object> getCharts(){
         return activityService.getCharts();
